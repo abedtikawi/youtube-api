@@ -21,7 +21,9 @@ module.exports = async (req, res) => {
     console.log("In user login.js");
     //check if email exists in DB
     console.log("-- Fetching email from database");
-    const checkEmail = await Users.findOne({ email: email });
+    const checkEmail = await Users.findOne({ email: email }).select(
+      "-__v -createdAt -updatedAt -password"
+    );
     if (!checkEmail) {
       console.log(`Email ${email} does not exist in Database`);
       return res.status(400).json({ message: "Email does not exist" });

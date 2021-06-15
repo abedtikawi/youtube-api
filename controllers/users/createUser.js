@@ -8,12 +8,13 @@ const jwt = require("jsonwebtoken");
  * @apiName RegisterUser
  * @apiGroup Users
  *
- * @apiParam {String} fullName User's full name
- * @apiParam {String} email User's email
+ * @apiParam {String} fullName User's Full Name
+ * @apiParam {String} email User's Email
  * @apiParam {String} youtube_channel_id User's Youtube Channel Id
- * @apiParam {String} password User's password
+ * @apiParam {String} password User's Password
  *
- * @apiSuccess {String} token authToken
+ * @apiSuccess {String} api Token
+ * @apiSuccess {Object} user MongoDB User Object
  */
 module.exports = async (req, res) => {
   try {

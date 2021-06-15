@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
     );
     const findUser = await Users.findOne({
       $or: [{ email: email }, { youtube_channel_id: youtube_channel_id }],
-    });
+    }).select('-__v -createdAt -updatedAt');
     if (findUser) {
       console.log(`User already exists in database`);
       return res

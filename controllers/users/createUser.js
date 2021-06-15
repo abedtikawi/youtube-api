@@ -26,13 +26,13 @@ module.exports = async (req, res) => {
     console.log(`-- checking if email ${email} exists in database `);
     const findUser = await Users.findOne({ email: email });
     if (findUser) {
-      console.log(`-- email ${email} found in database`);
+      console.log(`email ${email} already exists in database`);
       return res
         .status(400)
         .json({ message: "User already exists in Database" });
     }
     //generate salt to encrypt
-    console.log("generating salt");
+    console.log("--generating salt");
     const salt = await bcrypt.genSalt(10);
     //encrypt password with the generated Salt
     console.log("-- encrypting password with salt");

@@ -5,6 +5,7 @@ const usersSchema = mongoose.Schema(
     fullName: { type: String },
     email: { type: String, unique: true },
     password: { type: String },
+    youtube_channel_id: { type: String, unique: true },
     isAvailable: { type: Boolean, default: true },
   },
   { timestamps: true }

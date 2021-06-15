@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
  *
  * @apiParam {String} fullName User's full name
  * @apiParam {String} email User's email
+ * @apiParam {String} youtube_channel_id User's Youtube Channel Id
  * @apiParam {String} password User's password
  *
  * @apiSuccess {String} token authToken
@@ -20,19 +21,21 @@ module.exports = async (req, res) => {
     if (validateBody(req, res)) return;
     console.log("In Users createUser.js");
 
-    const { fullName, email, password } = req.body;
+    const { fullName, email, password, youtube_channel_id } = req.body;
 
     // check if email exists in DB
     console.log(`-- checking if email ${email} exists in database `);
-    const findUser = await Users.findOne({ email: email });
+    const findUser = await Users.findOne({
+      $or: [{ email: email }, { youtube_channel_id: youtube_channel_id }],
+    });
     if (findUser) {
-      console.log(`email ${email} already exists in database`);
+      console.log(`User already exists in database`);
       return res
         .status(400)
         .json({ message: "User already exists in Database" });
     }
     //generate salt to encrypt
-    console.log("--generating salt");
+    console.log("-- generating salt");
     const salt = await bcrypt.genSalt(10);
     //encrypt password with the generated Salt
     console.log("-- encrypting password with salt");
@@ -44,6 +47,7 @@ module.exports = async (req, res) => {
       fullName: fullName,
       email: email,
       password: encryptedPassword,
+      youtube_channel_id: youtube_channel_id,
     });
     console.log("-- inserted user into db successfully");
     //attach id in payload

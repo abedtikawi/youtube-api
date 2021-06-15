@@ -1,6 +1,7 @@
 const Users = require("../../models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const validateBody = require("../../utils/validateBody");
 /**
  * @api {post} /login Login User
  * @apiName LoginUser
@@ -13,6 +14,8 @@ const jwt = require("jsonwebtoken");
  */
 module.exports = async (req, res) => {
   try {
+    //validate request for email and password
+    if (validateBody(req, res)) return;
     const { email, password } = req.body;
     console.log("In user login.js");
     //check if email exists in DB
@@ -24,7 +27,7 @@ module.exports = async (req, res) => {
     }
     // compare passwords
     console.log("-- Comparing passwords");
-    const comparePassword = await bcrypt.compare(checkEmail, password);
+    const comparePassword = await bcrypt.compare(password, checkEmail.password);
     if (!comparePassword) {
       // passwords do not match
       console.log("Passwords do not match");

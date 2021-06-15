@@ -6,7 +6,7 @@ const express = require("express");
 
 // load files
 const connectDB = require("./db/dbController");
-const indexRouter = require("./routes/router");
+const indexRouter = require("./routes/userRouter");
 // create app instance of express
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // bind app instance to router
-app.use("/api/", indexRouter);
+app.use("/users/", indexRouter);
 
 // connect to DB
 connectDB();

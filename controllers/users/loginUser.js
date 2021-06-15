@@ -45,7 +45,9 @@ module.exports = async (req, res) => {
       expiresIn: "24h",
     });
 
-    return res.status(200).json({ message: "Success", api: token });
+    return res
+      .status(200)
+      .json({ message: "Success", api: token, user: checkEmail });
   } catch (error) {
     console.log("-- Error in loginUser.js");
     console.log(error);

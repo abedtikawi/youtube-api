@@ -21,10 +21,12 @@ module.exports = async (req, res) => {
     if (validateBody(req, res)) return;
     console.log("In Users createUser.js");
 
-    const { fullName, email, password, youtube_channel_id } = req.body;
-
+    const { fullName, email, password } = req.body;
+    const youtube_channel_id = req.body.channelID;
     // check if email exists in DB
-    console.log(`-- checking if email ${email} exists in database `);
+    console.log(
+      `-- checking if email ${email} or youtube channel exist exists in database `
+    );
     const findUser = await Users.findOne({
       $or: [{ email: email }, { youtube_channel_id: youtube_channel_id }],
     });
@@ -61,7 +63,9 @@ module.exports = async (req, res) => {
     const token = await jwt.sign(payload, process.env.ACCESS_TOKEN, {
       expiresIn: "24h",
     });
-    return res.status(200).json({ message: "Success", api: token });
+    return res
+      .status(200)
+      .json({ message: "Success", api: token, user: createUser });
   } catch (error) {
     console.log("-- Error in createUser.js");
     console.log(error);

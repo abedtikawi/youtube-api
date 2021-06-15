@@ -7,10 +7,11 @@ const validateBody = require("../../utils/validateBody");
  * @apiName LoginUser
  * @apiGroup Users
  *
- * @apiParam {String} email User's email
- * @apiParam {String} password User's password
+ * @apiParam {String} email User's Email
+ * @apiParam {String} password User's Password
  *
- * @apiSuccess {String} token authToken
+ * @apiSuccess {String} api Token
+ * @apiSuccess {Object} user MongoDB User Object
  */
 module.exports = async (req, res) => {
   try {

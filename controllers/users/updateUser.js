@@ -17,7 +17,9 @@ const Users = require("../../models/users");
  */
 module.exports = async (req, res) => {
   try {
-    
+    if (Object.keys(req.body) == "") {
+      return res.status(400).json({ message: "empty body" });
+    }
     console.log("In updateUser");
     // Grab all keys from req.body to dynamically update
     const entries = Object.keys(req.body);
@@ -37,11 +39,13 @@ module.exports = async (req, res) => {
     const updateUser = await Users.findByIdAndUpdate(
       { _id: req.user.id },
       { $set: updates }
-    );
+    )
 
     console.log(`-- Update User Successfully`);
-
-    return res.status(200).json({ msg: "Success", api: updateUser });
+    const getUpdatedUser = await Users.findById(req.user.id).select("-__v -createdAt -updatedAt -password");;
+    return res
+      .status(200)
+      .json({ msg: "Successfully updated User", api: getUpdatedUser });
   } catch (error) {
     console.log(`-- Error occured in updateUser`);
     console.log(error);

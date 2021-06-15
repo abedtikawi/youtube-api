@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     // query database and find user with the id found in the request after being decoded in the jwt middleware
     console.log(`-- Querying the database for the user with id ${req.user.id}`);
     const findUser = await Users.findById({ _id: req.user.id }).select(
-      "-__v -password "
+      "-__v -password  -createdAt -updatedAt"
     );
     if (!findUser) {
       // user does not exist in database
@@ -29,7 +29,9 @@ module.exports = async (req, res) => {
         .status(400)
         .json({ message: "User does not exist in the database" });
     }
-    console.log("-- Sending user object in response");
+    console.log(
+      `-- Sending user object in response for user ${findUser.email}`
+    );
     //return user object
 
     return res.status(200).json({ message: "Success", api: findUser });

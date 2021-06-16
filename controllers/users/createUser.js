@@ -67,11 +67,18 @@ module.exports = async (req, res) => {
     // Generate lifetime RefreshToken
     console.log('-- Generating Refresh Token');
     const refreshToken = await jwt.sign(payload, process.env.REFRESH_TOKEN);
+    console.log('-- Add Refresh token into user refresh token array');
+    const updateUser = await Users.findByIdAndUpdate(
+      { _id: createUser._id },
+      { $push: { refreshTokens: refreshToken } }
+    ).select('-__v -createdAt -updatedAt -password -refreshTokens');
 
-
-    return res
-      .status(200)
-      .json({ message: 'Success', api: token, user: createUser });
+    return res.status(200).json({
+      message: 'Success',
+      api: token,
+      user: updateUser,
+      refreshToken: refreshToken,
+    });
   } catch (error) {
     console.log('-- Error in createUser.js');
     console.log(error);

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const usersSchema = mongoose.Schema(
   {
@@ -7,8 +7,9 @@ const usersSchema = mongoose.Schema(
     password: { type: String },
     youtube_channel_id: { type: String, unique: true },
     isAvailable: { type: Boolean, default: true },
+    refreshTokens: [{ type: String, _id: false }],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Users", usersSchema);
+module.exports = mongoose.model('Users', usersSchema);

@@ -1,7 +1,7 @@
-const Users = require("../../models/users");
-const validateBody = require("../../utils/validateBody");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const Users = require('../../models/users');
+const validateBody = require('../../utils/validateBody');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 /**
  * @api {post} /register Register User
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   try {
     // check and validate body for email , fullname and password
     if (validateBody(req, res)) return;
-    console.log("In Users createUser.js");
+    console.log('In Users createUser.js');
 
     const { fullName, email, password, youtube_channel_id } = req.body;
 
@@ -30,29 +30,29 @@ module.exports = async (req, res) => {
     );
     const findUser = await Users.findOne({
       $or: [{ email: email }, { youtube_channel_id: youtube_channel_id }],
-    }).select("-__v -createdAt -updatedAt -password");
+    }).select('-__v -createdAt -updatedAt -password');
     if (findUser) {
       console.log(`User already exists in database`);
       return res
         .status(400)
-        .json({ message: "User already exists in Database" });
+        .json({ message: 'User already exists in Database' });
     }
     //generate salt to encrypt
-    console.log("-- generating salt");
+    console.log('-- generating salt');
     const salt = await bcrypt.genSalt(10);
     //encrypt password with the generated Salt
-    console.log("-- encrypting password with salt");
+    console.log('-- encrypting password with salt');
     const encryptedPassword = await bcrypt.hash(password, salt);
 
     //create user and insert into db
-    console.log("-- inserting user into db");
+    console.log('-- inserting user into db');
     const createUser = await Users.create({
       fullName: fullName,
       email: email,
       password: encryptedPassword,
       youtube_channel_id: youtube_channel_id,
     });
-    console.log("-- inserted user into db successfully");
+    console.log('-- inserted user into db successfully');
     //attach id in payload
     const payload = {
       user: {
@@ -60,16 +60,21 @@ module.exports = async (req, res) => {
       },
     };
     //sign payload with server's secret token and send via jwt token
-    console.log("-- generating token");
+    console.log('-- Generating Token');
     const token = await jwt.sign(payload, process.env.ACCESS_TOKEN, {
-      expiresIn: "24h",
+      expiresIn: '24h',
     });
+    // Generate lifetime RefreshToken
+    console.log('-- Generating Refresh Token');
+    const refreshToken = await jwt.sign(payload, process.env.REFRESH_TOKEN);
+
+
     return res
       .status(200)
-      .json({ message: "Success", api: token, user: createUser });
+      .json({ message: 'Success', api: token, user: createUser });
   } catch (error) {
-    console.log("-- Error in createUser.js");
+    console.log('-- Error in createUser.js');
     console.log(error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 };

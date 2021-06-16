@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     //check if email exists in DB
     console.log("-- Fetching email from database");
     const checkEmail = await Users.findOne({ email: email }).select(
-      "-__v -createdAt -updatedAt -password"
+      "-__v -createdAt -updatedAt "
     );
     if (!checkEmail) {
       console.log(`Email ${email} does not exist in Database`);

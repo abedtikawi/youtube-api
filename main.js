@@ -5,7 +5,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-// load files
+// load files and routers
 const connectDB = require('./db/dbController');
 const indexRouter = require('./routes/userRouter');
 const youtubeRouter = require('./routes/youtubeRouter');

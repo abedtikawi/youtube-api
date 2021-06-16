@@ -2,6 +2,7 @@ const Users = require('../../models/users');
 const validateBody = require('../../utils/validateBody');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 /**
  * @api {post} /register Register User
@@ -73,11 +74,15 @@ module.exports = async (req, res) => {
       { $set: { refreshTokens: refreshToken } }
     ).select('-__v -createdAt -updatedAt -password -refreshTokens');
 
+    //create httpOnly cookie for refresh token
+    const options = {
+      httpOnly: true,
+    };
+    res.cookie('refreshToken', refreshToken, options);
     return res.status(200).json({
       message: 'Success',
       api: token,
       user: updateUser,
-      refreshToken: refreshToken,
     });
   } catch (error) {
     console.log('-- Error in createUser.js');

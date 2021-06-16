@@ -1,11 +1,9 @@
 const jwt = require('jsonwebtoken');
 const Users = require('../../models/users');
+const cookieParser = require('cookie-parser');
 module.exports = async (req, res) => {
   try {
-
-
-
-
+        
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
     console.log('-- Error in RefreshToken.js');

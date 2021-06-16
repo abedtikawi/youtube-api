@@ -22,15 +22,15 @@ module.exports = async (req, res) => {
     if (validateBody(req, res)) return;
     console.log("In Users createUser.js");
 
-    const { fullName, email, password } = req.body;
-    const youtube_channel_id = req.body.channelID;
+    const { fullName, email, password, youtube_channel_id } = req.body;
+
     // check if email exists in DB
     console.log(
       `-- checking if email ${email} or youtube channel exist exists in database `
     );
     const findUser = await Users.findOne({
       $or: [{ email: email }, { youtube_channel_id: youtube_channel_id }],
-    }).select('-__v -createdAt -updatedAt -password');
+    }).select("-__v -createdAt -updatedAt -password");
     if (findUser) {
       console.log(`User already exists in database`);
       return res

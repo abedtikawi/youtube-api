@@ -3,7 +3,7 @@ require("dotenv").config();
 
 // load libraries
 const express = require("express");
-
+const cors = require("cors");
 // load files
 const connectDB = require("./db/dbController");
 const indexRouter = require("./routes/userRouter");
@@ -14,7 +14,7 @@ const app = express();
 // bind app to parse json
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(cors());
 // bind app instance to router
 app.use("/users/", indexRouter);
 app.use("/youtube/", youtubeRouter);

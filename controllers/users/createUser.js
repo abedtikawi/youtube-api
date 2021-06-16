@@ -70,7 +70,7 @@ module.exports = async (req, res) => {
     console.log('-- Add Refresh token into user refresh token array');
     const updateUser = await Users.findByIdAndUpdate(
       { _id: createUser._id },
-      { $push: { refreshTokens: refreshToken } }
+      { $set: { refreshTokens: refreshToken } }
     ).select('-__v -createdAt -updatedAt -password -refreshTokens');
 
     return res.status(200).json({

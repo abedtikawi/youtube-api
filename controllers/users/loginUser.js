@@ -42,12 +42,29 @@ module.exports = async (req, res) => {
         id: checkEmail._id,
       },
     };
+    // find how many refresh tokens does the user have
+    const latestRT = checkEmail.refreshTokens.length;
+    // grab the latest refresh token and set the refresh token to the latest RT found in the db
+    // to prevent generation of refresh token everytime the user logs
+    console.log(
+      `-- Grabbing the latest refresh token found in the user's model `
+    );
+    const refreshToken = checkEmail.refreshTokens[latestRT - 1];
     //sign payload with server's secret token and send via jwt token
     console.log("-- Generating token");
     const token = await jwt.sign(payload, process.env.ACCESS_TOKEN, {
       expiresIn: "24h",
     });
 
+    //create httpOnly cookie for refresh token
+    const options = {
+      httpOnly: true,
+    };
+    //set refresh cookie with the new refresh token
+    console.log(
+      "-- Set Refresh token with the new Refreshed Token for further api calls"
+    );
+    res.cookie("refreshToken", refreshToken, options);
     return res
       .status(200)
       .json({ message: "Success", api: token, user: checkEmail });

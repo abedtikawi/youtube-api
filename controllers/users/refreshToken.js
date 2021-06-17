@@ -9,7 +9,7 @@ const Users = require("../../models/users");
  *     {
  *       "cookie": "refreshToken=<refresh token>"
  *     }
- * @apiHeaderExample {String} Header-Example:
+ * @apiHeaderExample {json} Header-Example:
  *     {
  *       "authorization": "Bearer <your token>"
  *     }

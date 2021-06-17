@@ -2,7 +2,7 @@ const axios = require('axios');
 /**
  * @api {get} /:id Get User videos details
  * @apiName VideoDetails
- * @apiGroup Users
+ * @apiGroup Youtube
  * @apiParams {String} id videoID
  * @apiHeader {json} token Authorization value.
  * @apiHeaderExample {json} Header-Example:

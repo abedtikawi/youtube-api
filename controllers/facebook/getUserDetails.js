@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     // then perform the axios request with the user's token to recieve the params.fields values
     const paramOptions = {
       fields: "id,name,email,gender,picture,likes",
-      // there must be a login screen to authenticate the user using OAUTH and then the access token is the user's token
+      // there must be a login screen to authenticate the user using OAUTH and then the access token 
       access_token: process.env.FACEBOOK_API_KEY,
     };
 

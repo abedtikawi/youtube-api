@@ -5,10 +5,6 @@ const Users = require('../../models/users');
  * @api {post} /refresh Refresh User Token
  * @apiName RefreshToken
  * @apiGroup Users
- * @apiHeaderExample {json} Header-Example:
- *     {
- *       "authorization": "Bearer <token>"
- *     }
  * @apiHeaderExample {String} Header-Example:
  *     {
  *       "Cookie": "refreshToken=<refresh token>"

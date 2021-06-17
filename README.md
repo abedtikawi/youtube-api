@@ -80,5 +80,18 @@
   | GET        | /youtube/       | jwt token in ["authorization"] header| collection of youtube videos of quantity 50|
   | GET        |/youtube/:id     |  jwt token in ["authorization"] header & id of video | youtube video details with statistics
 
-  ----
-   
+  
+ ## For Further Documentation, Please refer to the apiDocs found in index.html
+---
+    ### A Top-level directory layout for the location of docs using apiDocs
+    ...
+    ...
+    ├── docs                # Documentation folder (apiDocs)
+    |      |
+    |      └── index.html      # More descriptive documentation regarding routes
+    |
+    ├── controllers
+    ├── middlewares
+    ├── models
+    ├── node_modules
+    ...  

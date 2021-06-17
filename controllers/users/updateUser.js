@@ -20,6 +20,9 @@ module.exports = async (req, res) => {
     if (Object.keys(req.body) == "") {
       return res.status(400).json({ message: "empty body" });
     }
+    if (req.body.email) {
+      return res.status(400).json({ message: " Email cannot be modified" });
+    }
     console.log("In updateUser");
     // Grab all keys from req.body to dynamically update
     const entries = Object.keys(req.body);

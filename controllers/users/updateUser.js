@@ -12,7 +12,7 @@ const bcrypt = require("bcrypt");
  * @apiParam {String} fullName User's Full Name
  * @apiParam {String} email User's Email
  * @apiParam {String} password User's Password
- * @apiParam {String} channelID User's Youtube channel ID
+ * @apiParam {String} youtube_channel_id User's Youtube channel ID
  * @apiSuccess {Object} user MongoDB User Object
  */
 module.exports = async (req, res) => {

@@ -4,7 +4,7 @@
 
 ---
 
-#### Build Two Endpoints.
+#### Build Two Controllers.
 
 ---
 
